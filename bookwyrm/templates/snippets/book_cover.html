@@ -1,0 +1,41 @@
+{% spaceless %}
+
+{% load i18n %}
+
+<figure
+    class="
+        cover-container
+        {{ cover_class }}
+
+        {% if not book.cover %}
+            no-cover
+        {% endif %}
+    "
+
+    {% if book.alt_text %}
+        title="{{ book.alt_text }}"
+    {% endif %}
+>
+    <img
+        class="book-cover"
+
+        {% if book.cover %}
+            src="{% if img_path is None %}/images/{% else %}{{ img_path }}{% endif %}{{ book.cover }}"
+            itemprop="thumbnailUrl"
+
+            {% if book.alt_text %}
+                alt="{{ book.alt_text }}"
+            {% endif %}
+        {% else %}
+            src="/static/images/no_cover.jpg"
+            alt="{% trans "No cover" %}"
+        {% endif %}
+    >
+
+    {% if not book.cover and book.alt_text %}
+        <figcaption class="cover_caption">
+            <p>{{ book.alt_text }}</p>
+        </figcaption>
+    {% endif %}
+</figure>
+{% endspaceless %}
